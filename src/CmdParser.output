@@ -1,0 +1,243 @@
+Terminals unused in grammar
+
+   SYMBOL
+   INT
+   ASSGN
+   LSQB
+   RSQB
+   LBRA
+   RBRA
+   LEAVE
+
+
+Grammar
+
+    0 $accept: list_option "end of file"
+
+    1 list_option: "end of file"
+    2            | command_list "end of file"
+
+    3 command_list: command
+    4             | command_list command
+
+    5 command: create_room_command
+    6        | join_room_command
+    7        | create_client_command
+    8        | WORD
+    9        | NEWLINE
+
+   10 create_room_command: ROOM expression
+
+   11 join_room_command: JOIN expression
+
+   12 create_client_command: CLIENT expression
+
+   13 expression: WORD
+
+
+Terminals, with rules where they appear
+
+"end of file" (0) 0 1 2
+error (256)
+WORD (258) 8 13
+SYMBOL (259)
+INT (260)
+ASSGN (261)
+LSQB (262)
+RSQB (263)
+LBRA (264)
+RBRA (265)
+ROOM (266) 10
+CLIENT (267) 12
+JOIN (268) 11
+LEAVE (269)
+NEWLINE (270) 9
+
+
+Nonterminals, with rules where they appear
+
+$accept (16)
+    on left: 0
+list_option (17)
+    on left: 1 2, on right: 0
+command_list (18)
+    on left: 3 4, on right: 2 4
+command (19)
+    on left: 5 6 7 8 9, on right: 3 4
+create_room_command (20)
+    on left: 10, on right: 5
+join_room_command (21)
+    on left: 11, on right: 6
+create_client_command (22)
+    on left: 12, on right: 7
+expression (23)
+    on left: 13, on right: 10 11 12
+
+
+State 0
+
+    0 $accept: . list_option "end of file"
+
+    "end of file"  shift, and go to state 1
+    WORD           shift, and go to state 2
+    ROOM           shift, and go to state 3
+    CLIENT         shift, and go to state 4
+    JOIN           shift, and go to state 5
+    NEWLINE        shift, and go to state 6
+
+    list_option            go to state 7
+    command_list           go to state 8
+    command                go to state 9
+    create_room_command    go to state 10
+    join_room_command      go to state 11
+    create_client_command  go to state 12
+
+
+State 1
+
+    1 list_option: "end of file" .
+
+    $default  reduce using rule 1 (list_option)
+
+
+State 2
+
+    8 command: WORD .
+
+    $default  reduce using rule 8 (command)
+
+
+State 3
+
+   10 create_room_command: ROOM . expression
+
+    WORD  shift, and go to state 13
+
+    expression  go to state 14
+
+
+State 4
+
+   12 create_client_command: CLIENT . expression
+
+    WORD  shift, and go to state 13
+
+    expression  go to state 15
+
+
+State 5
+
+   11 join_room_command: JOIN . expression
+
+    WORD  shift, and go to state 13
+
+    expression  go to state 16
+
+
+State 6
+
+    9 command: NEWLINE .
+
+    $default  reduce using rule 9 (command)
+
+
+State 7
+
+    0 $accept: list_option . "end of file"
+
+    "end of file"  shift, and go to state 17
+
+
+State 8
+
+    2 list_option: command_list . "end of file"
+    4 command_list: command_list . command
+
+    "end of file"  shift, and go to state 18
+    WORD           shift, and go to state 2
+    ROOM           shift, and go to state 3
+    CLIENT         shift, and go to state 4
+    JOIN           shift, and go to state 5
+    NEWLINE        shift, and go to state 6
+
+    command                go to state 19
+    create_room_command    go to state 10
+    join_room_command      go to state 11
+    create_client_command  go to state 12
+
+
+State 9
+
+    3 command_list: command .
+
+    $default  reduce using rule 3 (command_list)
+
+
+State 10
+
+    5 command: create_room_command .
+
+    $default  reduce using rule 5 (command)
+
+
+State 11
+
+    6 command: join_room_command .
+
+    $default  reduce using rule 6 (command)
+
+
+State 12
+
+    7 command: create_client_command .
+
+    $default  reduce using rule 7 (command)
+
+
+State 13
+
+   13 expression: WORD .
+
+    $default  reduce using rule 13 (expression)
+
+
+State 14
+
+   10 create_room_command: ROOM expression .
+
+    $default  reduce using rule 10 (create_room_command)
+
+
+State 15
+
+   12 create_client_command: CLIENT expression .
+
+    $default  reduce using rule 12 (create_client_command)
+
+
+State 16
+
+   11 join_room_command: JOIN expression .
+
+    $default  reduce using rule 11 (join_room_command)
+
+
+State 17
+
+    0 $accept: list_option "end of file" .
+
+    $default  accept
+
+
+State 18
+
+    2 list_option: command_list "end of file" .
+
+    $default  reduce using rule 2 (list_option)
+
+
+State 19
+
+    4 command_list: command_list command .
+
+    $default  reduce using rule 4 (command_list)
